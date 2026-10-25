@@ -1,0 +1,1851 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "FYTA",
+  "description": {
+    "en": "FYTA Beam plant sensors: soil moisture, light, temperature and care alerts.",
+    "fr": "Capteurs de plantes FYTA Beam : humidité du sol, lumière, température et alertes.",
+    "de": "FYTA-Beam-Pflanzensensoren: Bodenfeuchte, Licht, Temperatur und Pflegehinweise.",
+    "es": "Sensores de plantas FYTA Beam: humedad del suelo, luz, temperatura y avisos."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-fyta:0.1.0",
+  "gladys_version": ">=5.1.0",
+  "categories": ["environment"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-fyta/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "FYTA account",
+        "fr": "Compte FYTA",
+        "de": "FYTA-Konto",
+        "es": "Cuenta FYTA"
+      },
+      "description": {
+        "en": "Enter the e-mail address and the password you use in the FYTA app. The integration logs in to the official FYTA API (web.fyta.de) and only reads your plants: the measurements travel through the FYTA cloud, sent by the FYTA Hub or the app. Plants without a FYTA Beam sensor are not offered. This integration is not affiliated with FYTA.",
+        "fr": "Saisissez l’adresse e-mail et le mot de passe que vous utilisez dans l’application FYTA. L’intégration se connecte à l’API officielle de FYTA (web.fyta.de) et ne fait que lire vos plantes : les mesures passent par le cloud de FYTA, envoyées par le FYTA Hub ou l’application. Les plantes sans capteur FYTA Beam ne sont pas proposées. Cette intégration n’est pas affiliée à FYTA.",
+        "de": "Gib die E-Mail-Adresse und das Passwort ein, die du in der FYTA-App verwendest. Die Integration meldet sich bei der offiziellen FYTA-API (web.fyta.de) an und liest deine Pflanzen nur: Die Messwerte laufen über die FYTA-Cloud, gesendet vom FYTA Hub oder von der App. Pflanzen ohne FYTA-Beam-Sensor werden nicht angeboten. Diese Integration ist nicht mit FYTA verbunden.",
+        "es": "Introduzca la dirección de correo y la contraseña que usa en la aplicación FYTA. La integración se conecta a la API oficial de FYTA (web.fyta.de) y solo lee sus plantas: las mediciones pasan por la nube de FYTA, enviadas por el FYTA Hub o la aplicación. Las plantas sin sensor FYTA Beam no se ofrecen. Esta integración no está afiliada a FYTA."
+      },
+      "links": [
+        {
+          "url": "https://fyta.de/",
+          "label": {
+            "en": "FYTA website",
+            "fr": "Site de FYTA",
+            "de": "FYTA-Website",
+            "es": "Sitio web de FYTA"
+          }
+        },
+        {
+          "url": "https://fyta-io.notion.site/FYTA-Public-API-d2f4c30306f74504924c9a40402a3afd",
+          "label": {
+            "en": "FYTA API documentation",
+            "fr": "Documentation de l’API FYTA",
+            "de": "Dokumentation der FYTA-API",
+            "es": "Documentación de la API de FYTA"
+          }
+        }
+      ]
+    },
+    {
+      "key": "email",
+      "type": "string",
+      "required": true,
+      "label": {
+        "en": "E-mail address",
+        "fr": "Adresse e-mail",
+        "de": "E-Mail-Adresse",
+        "es": "Dirección de correo"
+      },
+      "placeholder": {
+        "en": "The e-mail of your FYTA account",
+        "fr": "L’e-mail de votre compte FYTA",
+        "de": "Die E-Mail deines FYTA-Kontos",
+        "es": "El correo de su cuenta FYTA"
+      }
+    },
+    {
+      "key": "password",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "placeholder": {
+        "en": "The password of your FYTA account",
+        "fr": "Le mot de passe de votre compte FYTA",
+        "de": "Das Passwort deines FYTA-Kontos",
+        "es": "La contraseña de su cuenta FYTA"
+      }
+    },
+    {
+      "key": "readings",
+      "type": "section",
+      "label": {
+        "en": "Readings and triggers",
+        "fr": "Lectures et déclencheurs",
+        "de": "Abfragen und Auslöser",
+        "es": "Lecturas y disparadores"
+      },
+      "description": {
+        "en": "A FYTA Beam sends its measurements about once an hour (through the FYTA Hub, or the app when the phone is near): reading more often brings nothing new. The details of a plant are read only when FYTA shows something new for it.",
+        "fr": "Un FYTA Beam envoie ses mesures environ une fois par heure (par le FYTA Hub, ou par l’application quand le téléphone est à proximité) : lire plus souvent n’apporte rien de neuf. Le détail d’une plante n’est lu que lorsque FYTA montre du nouveau pour elle.",
+        "de": "Ein FYTA Beam sendet seine Messwerte etwa einmal pro Stunde (über den FYTA Hub oder die App, wenn das Telefon in der Nähe ist): Häufiger abzufragen bringt nichts Neues. Die Details einer Pflanze werden nur gelesen, wenn FYTA etwas Neues für sie zeigt.",
+        "es": "Un FYTA Beam envía sus mediciones aproximadamente una vez por hora (a través del FYTA Hub, o de la aplicación cuando el teléfono está cerca): leer más a menudo no aporta nada nuevo. El detalle de una planta solo se lee cuando FYTA muestra algo nuevo para ella."
+      }
+    },
+    {
+      "key": "poll_interval",
+      "type": "select",
+      "default": "15",
+      "label": {
+        "en": "Reading of the plants",
+        "fr": "Lecture des plantes",
+        "de": "Abfrage der Pflanzen",
+        "es": "Lectura de las plantas"
+      },
+      "description": {
+        "en": "How often the list of the plants is read (one request for all).",
+        "fr": "Fréquence de lecture de la liste des plantes (une seule requête).",
+        "de": "Wie oft die Liste der Pflanzen gelesen wird (eine Anfrage für alle).",
+        "es": "Frecuencia de lectura de la lista de plantas (una sola petición)."
+      },
+      "options": [
+        {
+          "value": "10",
+          "label": {
+            "en": "Every 10 minutes",
+            "fr": "Toutes les 10 minutes",
+            "de": "Alle 10 Minuten",
+            "es": "Cada 10 minutos"
+          }
+        },
+        {
+          "value": "15",
+          "label": {
+            "en": "Every 15 minutes",
+            "fr": "Toutes les 15 minutes",
+            "de": "Alle 15 Minuten",
+            "es": "Cada 15 minutos"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "Every 30 minutes",
+            "fr": "Toutes les 30 minutes",
+            "de": "Alle 30 Minuten",
+            "es": "Cada 30 minutos"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "en": "Every hour",
+            "fr": "Toutes les heures",
+            "de": "Jede Stunde",
+            "es": "Cada hora"
+          }
+        }
+      ]
+    },
+    {
+      "key": "offline_after",
+      "type": "select",
+      "default": "3",
+      "label": {
+        "en": "Sensor without data after",
+        "fr": "Capteur sans données après",
+        "de": "Sensor ohne Daten nach",
+        "es": "Sensor sin datos después de"
+      },
+      "description": {
+        "en": "Time without a new measurement before a sensor is shown without data and the “sensor silent” trigger fires.",
+        "fr": "Durée sans nouvelle mesure avant qu’un capteur soit affiché sans données et que le déclencheur « capteur muet » se déclenche.",
+        "de": "Zeit ohne neuen Messwert, bevor ein Sensor als ohne Daten gilt und der Auslöser „Sensor stumm“ auslöst.",
+        "es": "Tiempo sin una nueva medición antes de que un sensor se muestre sin datos y se active el disparador «sensor sin señal»."
+      },
+      "options": [
+        {
+          "value": "2",
+          "label": {
+            "en": "2 hours",
+            "fr": "2 heures",
+            "de": "2 Stunden",
+            "es": "2 horas"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "en": "3 hours",
+            "fr": "3 heures",
+            "de": "3 Stunden",
+            "es": "3 horas"
+          }
+        },
+        {
+          "value": "6",
+          "label": {
+            "en": "6 hours",
+            "fr": "6 heures",
+            "de": "6 Stunden",
+            "es": "6 horas"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "en": "12 hours",
+            "fr": "12 heures",
+            "de": "12 Stunden",
+            "es": "12 horas"
+          }
+        },
+        {
+          "value": "24",
+          "label": {
+            "en": "24 hours",
+            "fr": "24 heures",
+            "de": "24 Stunden",
+            "es": "24 horas"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "auto",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Feature names, states (too low, perfect…), scene texts and errors. Automatic: the language of the last widget shown.",
+        "fr": "Noms des fonctionnalités, états (trop faible, parfait…), textes des scènes et erreurs. Automatique : la langue du dernier widget affiché.",
+        "de": "Namen der Funktionen, Zustände (zu niedrig, perfekt…), Szenentexte und Fehler. Automatisch: die Sprache des zuletzt angezeigten Widgets.",
+        "es": "Nombres de las funciones, estados (demasiado bajo, perfecto…), textos de escenas y errores. Automático: el idioma del último widget mostrado."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "timeout_seconds": 90,
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Logs in to FYTA, reads the plants and lists those with a sensor.",
+        "fr": "Se connecte à FYTA, lit les plantes et liste celles qui ont un capteur.",
+        "de": "Meldet sich bei FYTA an, liest die Pflanzen und listet die mit Sensor auf.",
+        "es": "Se conecta a FYTA, lee las plantas y enumera las que tienen sensor."
+      }
+    },
+    {
+      "key": "diagnostic",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes what the integration knows to its logs (no password, no token), for an issue.",
+        "fr": "Écrit ce que l’intégration sait dans ses journaux (sans mot de passe ni jeton), pour un ticket.",
+        "de": "Schreibt, was die Integration weiß, in ihre Logs (ohne Passwort und Token), für ein Issue.",
+        "es": "Escribe lo que sabe la integración en sus registros (sin contraseña ni token), para una incidencia."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "plants_to_care",
+      "label": {
+        "en": "Plants to care for",
+        "fr": "Plantes à soigner",
+        "de": "Pflanzen zu pflegen",
+        "es": "Plantas por cuidar"
+      },
+      "description": {
+        "en": "The plants that need water, light or care, the worst first.",
+        "fr": "Les plantes qui ont besoin d’eau, de lumière ou de soins, les pires d’abord.",
+        "de": "Die Pflanzen, die Wasser, Licht oder Pflege brauchen, die dringendsten zuerst.",
+        "es": "Las plantas que necesitan agua, luz o cuidados, las peores primero."
+      },
+      "icon": "droplet",
+      "action_timeout_seconds": 90
+    },
+    {
+      "key": "plant",
+      "label": {
+        "en": "FYTA plant",
+        "fr": "Plante FYTA",
+        "de": "FYTA-Pflanze",
+        "es": "Planta FYTA"
+      },
+      "description": {
+        "en": "One plant: its picture, measures colored by their state, battery, next fertilizing.",
+        "fr": "Une plante : sa photo, ses mesures colorées selon leur état, la batterie, le prochain engrais.",
+        "de": "Eine Pflanze: ihr Foto, die Messwerte nach Zustand gefärbt, Batterie, nächste Düngung.",
+        "es": "Una planta: su foto, sus medidas coloreadas según su estado, batería, próximo abonado."
+      },
+      "icon": "feather",
+      "settings": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for the first plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour la première plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für die erste Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para la primera planta."
+          }
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "plant_needs_attention",
+      "label": {
+        "en": "FYTA: plant needs attention",
+        "fr": "FYTA : plante à surveiller",
+        "de": "FYTA: Pflanze braucht Pflege",
+        "es": "FYTA: planta necesita atención"
+      },
+      "description": {
+        "en": "FYTA’s state of the plant goes from “doing great” to “needs attention”.",
+        "fr": "L’état FYTA de la plante passe de « en pleine forme » à « à surveiller ».",
+        "de": "Der FYTA-Zustand der Pflanze wechselt von „alles bestens“ zu „braucht Pflege“.",
+        "es": "El estado FYTA de la planta pasa de «en perfecto estado» a «necesita atención»."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "problems",
+          "type": "string",
+          "label": {
+            "en": "What is wrong",
+            "fr": "Ce qui ne va pas",
+            "de": "Was nicht stimmt",
+            "es": "Qué falla"
+          }
+        },
+        {
+          "key": "problem_count",
+          "type": "number",
+          "label": {
+            "en": "Number of measures out of range",
+            "fr": "Nombre de mesures hors plage",
+            "de": "Anzahl der Werte außerhalb des Bereichs",
+            "es": "Número de medidas fuera de rango"
+          }
+        }
+      ]
+    },
+    {
+      "key": "plant_thirsty",
+      "label": {
+        "en": "FYTA: plant thirsty",
+        "fr": "FYTA : plante assoiffée",
+        "de": "FYTA: Pflanze durstig",
+        "es": "FYTA: planta con sed"
+      },
+      "description": {
+        "en": "The soil moisture enters the low or too low range of the plant.",
+        "fr": "L’humidité du sol entre dans la plage faible ou trop faible de la plante.",
+        "de": "Die Bodenfeuchte fällt in den niedrigen oder zu niedrigen Bereich der Pflanze.",
+        "es": "La humedad del suelo entra en el rango bajo o demasiado bajo de la planta."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "moisture",
+          "type": "number",
+          "label": {
+            "en": "Soil moisture (%)",
+            "fr": "Humidité du sol (%)",
+            "de": "Bodenfeuchte (%)",
+            "es": "Humedad del suelo (%)"
+          }
+        },
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (key)",
+            "fr": "Niveau (clé)",
+            "de": "Stufe (Schlüssel)",
+            "es": "Nivel (clave)"
+          }
+        },
+        {
+          "key": "level_label",
+          "type": "string",
+          "label": {
+            "en": "Level",
+            "fr": "Niveau",
+            "de": "Stufe",
+            "es": "Nivel"
+          }
+        },
+        {
+          "key": "min_good",
+          "type": "number",
+          "label": {
+            "en": "Lowest good soil moisture (%)",
+            "fr": "Humidité du sol idéale minimale (%)",
+            "de": "Kleinste ideale Bodenfeuchte (%)",
+            "es": "Humedad del suelo ideal mínima (%)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "measure_out_of_range",
+      "label": {
+        "en": "FYTA: measure out of range",
+        "fr": "FYTA : mesure hors plage",
+        "de": "FYTA: Messwert außerhalb des Bereichs",
+        "es": "FYTA: medida fuera de rango"
+      },
+      "description": {
+        "en": "Soil moisture, light, temperature, salinity or nutrients changes to low, too low, high or too high.",
+        "fr": "L’humidité du sol, la lumière, la température, la salinité ou les nutriments passent à faible, trop faible, élevé ou trop élevé.",
+        "de": "Bodenfeuchte, Licht, Temperatur, Salzgehalt oder Nährstoffe wechseln zu niedrig, zu niedrig, hoch oder zu hoch.",
+        "es": "La humedad del suelo, la luz, la temperatura, la salinidad o los nutrientes pasan a bajo, demasiado bajo, alto o demasiado alto."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        },
+        {
+          "key": "measure",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Measures",
+            "fr": "Mesures",
+            "de": "Messwerte",
+            "es": "Medidas"
+          },
+          "description": {
+            "en": "Leave empty for any measure.",
+            "fr": "Laissez vide pour toutes les mesures.",
+            "de": "Leer lassen für jeden Messwert.",
+            "es": "Déjelo vacío para cualquier medida."
+          },
+          "options": [
+            {
+              "value": "moisture",
+              "label": {
+                "en": "Soil moisture",
+                "fr": "Humidité du sol",
+                "de": "Bodenfeuchte",
+                "es": "Humedad del suelo"
+              }
+            },
+            {
+              "value": "light",
+              "label": {
+                "en": "Light",
+                "fr": "Lumière",
+                "de": "Licht",
+                "es": "Luz"
+              }
+            },
+            {
+              "value": "temperature",
+              "label": {
+                "en": "Temperature",
+                "fr": "Température",
+                "de": "Temperatur",
+                "es": "Temperatura"
+              }
+            },
+            {
+              "value": "salinity",
+              "label": {
+                "en": "Salinity (fertilizer)",
+                "fr": "Salinité (engrais)",
+                "de": "Salzgehalt (Dünger)",
+                "es": "Salinidad (abono)"
+              }
+            },
+            {
+              "value": "nutrients",
+              "label": {
+                "en": "Nutrients",
+                "fr": "Nutriments",
+                "de": "Nährstoffe",
+                "es": "Nutrientes"
+              }
+            }
+          ]
+        },
+        {
+          "key": "level",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Levels",
+            "fr": "Niveaux",
+            "de": "Stufen",
+            "es": "Niveles"
+          },
+          "description": {
+            "en": "Leave empty for any level.",
+            "fr": "Laissez vide pour tous les niveaux.",
+            "de": "Leer lassen für jede Stufe.",
+            "es": "Déjelo vacío para cualquier nivel."
+          },
+          "options": [
+            {
+              "value": "too_low",
+              "label": {
+                "en": "Too low",
+                "fr": "Trop faible",
+                "de": "Zu niedrig",
+                "es": "Demasiado bajo"
+              }
+            },
+            {
+              "value": "low",
+              "label": {
+                "en": "Low",
+                "fr": "Faible",
+                "de": "Niedrig",
+                "es": "Bajo"
+              }
+            },
+            {
+              "value": "high",
+              "label": {
+                "en": "High",
+                "fr": "Élevé",
+                "de": "Hoch",
+                "es": "Alto"
+              }
+            },
+            {
+              "value": "too_high",
+              "label": {
+                "en": "Too high",
+                "fr": "Trop élevé",
+                "de": "Zu hoch",
+                "es": "Demasiado alto"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "measure",
+          "type": "string",
+          "label": {
+            "en": "Measure (key)",
+            "fr": "Mesure (clé)",
+            "de": "Messwert (Schlüssel)",
+            "es": "Medida (clave)"
+          }
+        },
+        {
+          "key": "measure_label",
+          "type": "string",
+          "label": {
+            "en": "Measure",
+            "fr": "Mesure",
+            "de": "Messwert",
+            "es": "Medida"
+          }
+        },
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (key)",
+            "fr": "Niveau (clé)",
+            "de": "Stufe (Schlüssel)",
+            "es": "Nivel (clave)"
+          }
+        },
+        {
+          "key": "level_label",
+          "type": "string",
+          "label": {
+            "en": "Level",
+            "fr": "Niveau",
+            "de": "Stufe",
+            "es": "Nivel"
+          }
+        },
+        {
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "Value",
+            "fr": "Valeur",
+            "de": "Wert",
+            "es": "Valor"
+          }
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "label": {
+            "en": "Unit",
+            "fr": "Unité",
+            "de": "Einheit",
+            "es": "Unidad"
+          }
+        },
+        {
+          "key": "min_good",
+          "type": "number",
+          "label": {
+            "en": "Lowest good value",
+            "fr": "Valeur idéale minimale",
+            "de": "Kleinster idealer Wert",
+            "es": "Valor ideal mínimo"
+          }
+        },
+        {
+          "key": "max_good",
+          "type": "number",
+          "label": {
+            "en": "Highest good value",
+            "fr": "Valeur idéale maximale",
+            "de": "Größter idealer Wert",
+            "es": "Valor ideal máximo"
+          }
+        }
+      ]
+    },
+    {
+      "key": "measure_back_in_range",
+      "label": {
+        "en": "FYTA: measure back in range",
+        "fr": "FYTA : mesure revenue dans la plage",
+        "de": "FYTA: Messwert wieder im Bereich",
+        "es": "FYTA: medida de nuevo en rango"
+      },
+      "description": {
+        "en": "A measure of the plant comes back to perfect.",
+        "fr": "Une mesure de la plante revient à parfait.",
+        "de": "Ein Messwert der Pflanze ist wieder perfekt.",
+        "es": "Una medida de la planta vuelve a perfecto."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        },
+        {
+          "key": "measure",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Measures",
+            "fr": "Mesures",
+            "de": "Messwerte",
+            "es": "Medidas"
+          },
+          "description": {
+            "en": "Leave empty for any measure.",
+            "fr": "Laissez vide pour toutes les mesures.",
+            "de": "Leer lassen für jeden Messwert.",
+            "es": "Déjelo vacío para cualquier medida."
+          },
+          "options": [
+            {
+              "value": "moisture",
+              "label": {
+                "en": "Soil moisture",
+                "fr": "Humidité du sol",
+                "de": "Bodenfeuchte",
+                "es": "Humedad del suelo"
+              }
+            },
+            {
+              "value": "light",
+              "label": {
+                "en": "Light",
+                "fr": "Lumière",
+                "de": "Licht",
+                "es": "Luz"
+              }
+            },
+            {
+              "value": "temperature",
+              "label": {
+                "en": "Temperature",
+                "fr": "Température",
+                "de": "Temperatur",
+                "es": "Temperatura"
+              }
+            },
+            {
+              "value": "salinity",
+              "label": {
+                "en": "Salinity (fertilizer)",
+                "fr": "Salinité (engrais)",
+                "de": "Salzgehalt (Dünger)",
+                "es": "Salinidad (abono)"
+              }
+            },
+            {
+              "value": "nutrients",
+              "label": {
+                "en": "Nutrients",
+                "fr": "Nutriments",
+                "de": "Nährstoffe",
+                "es": "Nutrientes"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "measure",
+          "type": "string",
+          "label": {
+            "en": "Measure (key)",
+            "fr": "Mesure (clé)",
+            "de": "Messwert (Schlüssel)",
+            "es": "Medida (clave)"
+          }
+        },
+        {
+          "key": "measure_label",
+          "type": "string",
+          "label": {
+            "en": "Measure",
+            "fr": "Mesure",
+            "de": "Messwert",
+            "es": "Medida"
+          }
+        },
+        {
+          "key": "previous_level",
+          "type": "string",
+          "label": {
+            "en": "Previous level (key)",
+            "fr": "Niveau précédent (clé)",
+            "de": "Vorherige Stufe (Schlüssel)",
+            "es": "Nivel anterior (clave)"
+          }
+        },
+        {
+          "key": "previous_level_label",
+          "type": "string",
+          "label": {
+            "en": "Previous level",
+            "fr": "Niveau précédent",
+            "de": "Vorherige Stufe",
+            "es": "Nivel anterior"
+          }
+        },
+        {
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "Value",
+            "fr": "Valeur",
+            "de": "Wert",
+            "es": "Valor"
+          }
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "label": {
+            "en": "Unit",
+            "fr": "Unité",
+            "de": "Einheit",
+            "es": "Unidad"
+          }
+        },
+        {
+          "key": "min_good",
+          "type": "number",
+          "label": {
+            "en": "Lowest good value",
+            "fr": "Valeur idéale minimale",
+            "de": "Kleinster idealer Wert",
+            "es": "Valor ideal mínimo"
+          }
+        },
+        {
+          "key": "max_good",
+          "type": "number",
+          "label": {
+            "en": "Highest good value",
+            "fr": "Valeur idéale maximale",
+            "de": "Größter idealer Wert",
+            "es": "Valor ideal máximo"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sensor_battery_low",
+      "label": {
+        "en": "FYTA: sensor battery low",
+        "fr": "FYTA : batterie du capteur faible",
+        "de": "FYTA: Sensorbatterie schwach",
+        "es": "FYTA: batería del sensor baja"
+      },
+      "description": {
+        "en": "FYTA flags the battery of the sensor of the plant as low.",
+        "fr": "FYTA signale la batterie du capteur de la plante comme faible.",
+        "de": "FYTA meldet die Batterie des Sensors der Pflanze als schwach.",
+        "es": "FYTA marca la batería del sensor de la planta como baja."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "battery_level",
+          "type": "number",
+          "label": {
+            "en": "Battery (%)",
+            "fr": "Batterie (%)",
+            "de": "Batterie (%)",
+            "es": "Batería (%)"
+          }
+        },
+        {
+          "key": "sensor_id",
+          "type": "string",
+          "label": {
+            "en": "Sensor id",
+            "fr": "Identifiant du capteur",
+            "de": "Sensor-ID",
+            "es": "Id. del sensor"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sensor_silent",
+      "label": {
+        "en": "FYTA: sensor silent",
+        "fr": "FYTA : capteur muet",
+        "de": "FYTA: Sensor stumm",
+        "es": "FYTA: sensor sin señal"
+      },
+      "description": {
+        "en": "No new measurement of the plant for the delay of the configuration.",
+        "fr": "Aucune nouvelle mesure de la plante pendant le délai de la configuration.",
+        "de": "Kein neuer Messwert der Pflanze während der eingestellten Zeit.",
+        "es": "Ninguna nueva medición de la planta durante el plazo de la configuración."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "hours_without_data",
+          "type": "number",
+          "label": {
+            "en": "Hours without data",
+            "fr": "Heures sans données",
+            "de": "Stunden ohne Daten",
+            "es": "Horas sin datos"
+          }
+        },
+        {
+          "key": "last_measurement_at",
+          "type": "string",
+          "label": {
+            "en": "Last measurement (ISO 8601)",
+            "fr": "Dernière mesure (ISO 8601)",
+            "de": "Letzte Messung (ISO 8601)",
+            "es": "Última medición (ISO 8601)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sensor_back",
+      "label": {
+        "en": "FYTA: sensor back",
+        "fr": "FYTA : capteur de retour",
+        "de": "FYTA: Sensor wieder da",
+        "es": "FYTA: sensor de vuelta"
+      },
+      "description": {
+        "en": "Measurements arrive again after a silence of the sensor.",
+        "fr": "Les mesures arrivent de nouveau après un silence du capteur.",
+        "de": "Nach einer Pause des Sensors kommen wieder Messwerte an.",
+        "es": "Las mediciones vuelven a llegar tras un silencio del sensor."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "hours_without_data",
+          "type": "number",
+          "label": {
+            "en": "Hours without data",
+            "fr": "Heures sans données",
+            "de": "Stunden ohne Daten",
+            "es": "Horas sin datos"
+          }
+        },
+        {
+          "key": "last_measurement_at",
+          "type": "string",
+          "label": {
+            "en": "Last measurement (ISO 8601)",
+            "fr": "Dernière mesure (ISO 8601)",
+            "de": "Letzte Messung (ISO 8601)",
+            "es": "Última medición (ISO 8601)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "fertilisation_due",
+      "label": {
+        "en": "FYTA: fertilizing due",
+        "fr": "FYTA : engrais à apporter",
+        "de": "FYTA: Düngung fällig",
+        "es": "FYTA: toca abonar"
+      },
+      "description": {
+        "en": "The fertilizing date FYTA planned for the plant is reached (at 9:00).",
+        "fr": "La date d’engrais que FYTA a prévue pour la plante est atteinte (à 9 h).",
+        "de": "Das von FYTA geplante Düngedatum der Pflanze ist erreicht (um 9:00 Uhr).",
+        "es": "Se alcanza la fecha de abonado que FYTA previó para la planta (a las 9:00)."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for any plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour n’importe quelle plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für jede Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para cualquier planta."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "plant",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "plant_id",
+          "type": "number",
+          "label": {
+            "en": "FYTA plant id",
+            "fr": "Identifiant FYTA de la plante",
+            "de": "FYTA-ID der Pflanze",
+            "es": "Id. FYTA de la planta"
+          }
+        },
+        {
+          "key": "scientific_name",
+          "type": "string",
+          "label": {
+            "en": "Species",
+            "fr": "Espèce",
+            "de": "Art",
+            "es": "Especie"
+          }
+        },
+        {
+          "key": "due_date",
+          "type": "string",
+          "label": {
+            "en": "Planned date (YYYY-MM-DD)",
+            "fr": "Date prévue (AAAA-MM-JJ)",
+            "de": "Geplantes Datum (JJJJ-MM-TT)",
+            "es": "Fecha prevista (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "last_fertilised",
+          "type": "string",
+          "label": {
+            "en": "Last fertilized (YYYY-MM-DD)",
+            "fr": "Dernier engrais (AAAA-MM-JJ)",
+            "de": "Zuletzt gedüngt (JJJJ-MM-TT)",
+            "es": "Último abonado (AAAA-MM-DD)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "access_refused",
+      "label": {
+        "en": "FYTA: access refused",
+        "fr": "FYTA : accès refusé",
+        "de": "FYTA: Zugriff verweigert",
+        "es": "FYTA: acceso rechazado"
+      },
+      "description": {
+        "en": "FYTA refuses the e-mail address, the password or the access of the account.",
+        "fr": "FYTA refuse l’adresse e-mail, le mot de passe ou l’accès du compte.",
+        "de": "FYTA lehnt die E-Mail-Adresse, das Passwort oder den Zugriff des Kontos ab.",
+        "es": "FYTA rechaza la dirección de correo, la contraseña o el acceso de la cuenta."
+      },
+      "fields": [
+        {
+          "key": "reason",
+          "type": "select",
+          "required": false,
+          "label": {
+            "en": "Reason",
+            "fr": "Raison",
+            "de": "Grund",
+            "es": "Motivo"
+          },
+          "description": {
+            "en": "Leave empty for any reason.",
+            "fr": "Laissez vide pour toutes les raisons.",
+            "de": "Leer lassen für jeden Grund.",
+            "es": "Déjelo vacío para cualquier motivo."
+          },
+          "options": [
+            {
+              "value": "unknown_account",
+              "label": {
+                "en": "Unknown e-mail address",
+                "fr": "Adresse e-mail inconnue",
+                "de": "Unbekannte E-Mail-Adresse",
+                "es": "Dirección de correo desconocida"
+              }
+            },
+            {
+              "value": "wrong_password",
+              "label": {
+                "en": "Wrong password",
+                "fr": "Mauvais mot de passe",
+                "de": "Falsches Passwort",
+                "es": "Contraseña incorrecta"
+              }
+            },
+            {
+              "value": "token",
+              "label": {
+                "en": "Access refused",
+                "fr": "Accès refusé",
+                "de": "Zugriff verweigert",
+                "es": "Acceso rechazado"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "reason",
+          "type": "string",
+          "label": {
+            "en": "Reason",
+            "fr": "Raison",
+            "de": "Grund",
+            "es": "Motivo"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Message",
+            "fr": "Message",
+            "de": "Meldung",
+            "es": "Mensaje"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "refresh",
+      "timeout_seconds": 90,
+      "label": {
+        "en": "FYTA: refresh now",
+        "fr": "FYTA : actualiser maintenant",
+        "de": "FYTA: jetzt aktualisieren",
+        "es": "FYTA: actualizar ahora"
+      },
+      "description": {
+        "en": "Reads every plant now (once a minute at most). The triggers follow at the next round.",
+        "fr": "Lit toutes les plantes maintenant (une fois par minute au plus). Les déclencheurs suivent au tour suivant.",
+        "de": "Liest jetzt alle Pflanzen (höchstens einmal pro Minute). Die Auslöser folgen in der nächsten Runde.",
+        "es": "Lee todas las plantas ahora (como mucho una vez por minuto). Los disparadores siguen en la próxima ronda."
+      },
+      "fields": [],
+      "outputs": [
+        {
+          "key": "plant_count",
+          "type": "number",
+          "label": {
+            "en": "Plants with a sensor",
+            "fr": "Plantes avec capteur",
+            "de": "Pflanzen mit Sensor",
+            "es": "Plantas con sensor"
+          }
+        },
+        {
+          "key": "care_count",
+          "type": "number",
+          "label": {
+            "en": "Plants to care for",
+            "fr": "Plantes à soigner",
+            "de": "Pflanzen zu pflegen",
+            "es": "Plantas por cuidar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_plant",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "FYTA: values of a plant",
+        "fr": "FYTA : valeurs d’une plante",
+        "de": "FYTA: Werte einer Pflanze",
+        "es": "FYTA: valores de una planta"
+      },
+      "description": {
+        "en": "The last values and states of a plant (no request): for a message or a condition.",
+        "fr": "Les dernières valeurs et états d’une plante (sans requête) : pour un message ou une condition.",
+        "de": "Die letzten Werte und Zustände einer Pflanze (ohne Anfrage): für eine Nachricht oder Bedingung.",
+        "es": "Los últimos valores y estados de una planta (sin petición): para un mensaje o una condición."
+      },
+      "fields": [
+        {
+          "key": "plant",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Plant",
+            "fr": "Plante",
+            "de": "Pflanze",
+            "es": "Planta"
+          },
+          "description": {
+            "en": "A FYTA device. Leave empty for the first plant.",
+            "fr": "Un appareil FYTA. Laissez vide pour la première plante.",
+            "de": "Ein FYTA-Gerät. Leer lassen für die erste Pflanze.",
+            "es": "Un dispositivo FYTA. Déjelo vacío para la primera planta."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "plant_name",
+          "type": "string",
+          "label": {
+            "en": "Plant name",
+            "fr": "Nom de la plante",
+            "de": "Name der Pflanze",
+            "es": "Nombre de la planta"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State of the plant",
+            "fr": "État de la plante",
+            "de": "Zustand der Pflanze",
+            "es": "Estado de la planta"
+          }
+        },
+        {
+          "key": "needs_attention",
+          "type": "boolean",
+          "label": {
+            "en": "Needs care",
+            "fr": "À soigner",
+            "de": "Braucht Pflege",
+            "es": "Necesita cuidados"
+          }
+        },
+        {
+          "key": "moisture",
+          "type": "number",
+          "label": {
+            "en": "Soil moisture (%)",
+            "fr": "Humidité du sol (%)",
+            "de": "Bodenfeuchte (%)",
+            "es": "Humedad del suelo (%)"
+          }
+        },
+        {
+          "key": "moisture_state",
+          "type": "string",
+          "label": {
+            "en": "Soil moisture state (key)",
+            "fr": "État de l’humidité du sol (clé)",
+            "de": "Zustand der Bodenfeuchte (Schlüssel)",
+            "es": "Estado de la humedad del suelo (clave)"
+          }
+        },
+        {
+          "key": "light",
+          "type": "number",
+          "label": {
+            "en": "Light (µmol/m²/s)",
+            "fr": "Lumière (µmol/m²/s)",
+            "de": "Licht (µmol/m²/s)",
+            "es": "Luz (µmol/m²/s)"
+          }
+        },
+        {
+          "key": "light_state",
+          "type": "string",
+          "label": {
+            "en": "Light state (key)",
+            "fr": "État de la lumière (clé)",
+            "de": "Zustand des Lichts (Schlüssel)",
+            "es": "Estado de la luz (clave)"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "temperature_state",
+          "type": "string",
+          "label": {
+            "en": "Temperature state (key)",
+            "fr": "État de la température (clé)",
+            "de": "Zustand der Temperatur (Schlüssel)",
+            "es": "Estado de la temperatura (clave)"
+          }
+        },
+        {
+          "key": "salinity",
+          "type": "number",
+          "label": {
+            "en": "Salinity (mS/cm)",
+            "fr": "Salinité (mS/cm)",
+            "de": "Salzgehalt (mS/cm)",
+            "es": "Salinidad (mS/cm)"
+          }
+        },
+        {
+          "key": "salinity_state",
+          "type": "string",
+          "label": {
+            "en": "Salinity state (key)",
+            "fr": "État de la salinité (clé)",
+            "de": "Zustand des Salzgehalts (Schlüssel)",
+            "es": "Estado de la salinidad (clave)"
+          }
+        },
+        {
+          "key": "nutrients_state",
+          "type": "string",
+          "label": {
+            "en": "Nutrients state (key)",
+            "fr": "État des nutriments (clé)",
+            "de": "Zustand der Nährstoffe (Schlüssel)",
+            "es": "Estado de los nutrientes (clave)"
+          }
+        },
+        {
+          "key": "battery",
+          "type": "number",
+          "label": {
+            "en": "Sensor battery (%)",
+            "fr": "Batterie du capteur (%)",
+            "de": "Sensorbatterie (%)",
+            "es": "Batería del sensor (%)"
+          }
+        },
+        {
+          "key": "hours_without_data",
+          "type": "number",
+          "label": {
+            "en": "Hours since the last measurement",
+            "fr": "Heures depuis la dernière mesure",
+            "de": "Stunden seit der letzten Messung",
+            "es": "Horas desde la última medición"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary (text)",
+            "fr": "Résumé (texte)",
+            "de": "Zusammenfassung (Text)",
+            "es": "Resumen (texto)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_care_summary",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "FYTA: plants to care for",
+        "fr": "FYTA : plantes à soigner",
+        "de": "FYTA: Pflanzen zu pflegen",
+        "es": "FYTA: plantas por cuidar"
+      },
+      "description": {
+        "en": "How many plants need care and what is wrong, in a text (no request): for a daily message.",
+        "fr": "Combien de plantes ont besoin de soins et ce qui ne va pas, en texte (sans requête) : pour un message quotidien.",
+        "de": "Wie viele Pflanzen Pflege brauchen und was nicht stimmt, als Text (ohne Anfrage): für eine tägliche Nachricht.",
+        "es": "Cuántas plantas necesitan cuidados y qué falla, en texto (sin petición): para un mensaje diario."
+      },
+      "fields": [],
+      "outputs": [
+        {
+          "key": "care_count",
+          "type": "number",
+          "label": {
+            "en": "Plants to care for",
+            "fr": "Plantes à soigner",
+            "de": "Pflanzen zu pflegen",
+            "es": "Plantas por cuidar"
+          }
+        },
+        {
+          "key": "plant_count",
+          "type": "number",
+          "label": {
+            "en": "Plants with a sensor",
+            "fr": "Plantes avec capteur",
+            "de": "Pflanzen mit Sensor",
+            "es": "Plantas con sensor"
+          }
+        },
+        {
+          "key": "silent_count",
+          "type": "number",
+          "label": {
+            "en": "Silent sensors",
+            "fr": "Capteurs muets",
+            "de": "Stumme Sensoren",
+            "es": "Sensores sin señal"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary (text)",
+            "fr": "Résumé (texte)",
+            "de": "Zusammenfassung (Text)",
+            "es": "Resumen (texto)"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,662 @@
+{
+  "_source": "Built for the tests on the shapes of the official FYTA Public API documentation (fyta-doc.json) and of the fields Home Assistant reads through fyta_cli (nutrients, fertilisation, is_productive_plant, sensor_update_available, notifications); the values, names, ids and URLs are invented. Times are UTC, around 2026-10-25 10:00.",
+  "login": {
+    "access_token": "not-a-real-fyta-access-token",
+    "token_type": "Bearer",
+    "expires_in": 5184000,
+    "refresh_token": "not-a-real-fyta-refresh-token",
+    "scope": "mobile"
+  },
+  "plants": {
+    "gardens": [
+      {
+        "id": 7,
+        "garden_name": "Salon",
+        "origin_path": null,
+        "thumb_path": null,
+        "mac_address": null
+      }
+    ],
+    "plants": [
+      {
+        "id": 101,
+        "nickname": "Monstera",
+        "scientific_name": "Monstera deliciosa",
+        "status": 2,
+        "plant_id": 1001,
+        "family_id": null,
+        "wifi_status": 1,
+        "thumb_path": "https://web.fyta.de/storage/user-plants/101/thumb.jpg",
+        "origin_path": "https://web.fyta.de/storage/user-plants/101/origin.jpg",
+        "plant_thumb_path": "https://plants.example.org/species/monstera-thumb.jpg",
+        "plant_origin_path": "https://plants.example.org/species/monstera-thumb.jpg",
+        "received_data_at": "2026-10-25 09:40:00",
+        "temperature_optimal_hours": 20,
+        "light_optimal_hours": 6,
+        "temperature_status": 3,
+        "light_status": 3,
+        "moisture_status": 1,
+        "salinity_status": 2,
+        "garden": {
+          "id": 7
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:01",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": false,
+          "received_data_at": "2026-10-25 09:40:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        }
+      },
+      {
+        "id": 102,
+        "nickname": "Basilic",
+        "scientific_name": "Ocimum basilicum",
+        "status": 1,
+        "plant_id": 1002,
+        "family_id": null,
+        "wifi_status": 1,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": "https://plants.example.org/species/basil-thumb.jpg",
+        "plant_origin_path": "https://plants.example.org/species/basil-thumb.jpg",
+        "received_data_at": "2026-10-25 09:35:00",
+        "temperature_optimal_hours": 20,
+        "light_optimal_hours": 6,
+        "temperature_status": 3,
+        "light_status": 3,
+        "moisture_status": 3,
+        "salinity_status": 3,
+        "garden": {
+          "id": 7
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:02",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": false,
+          "received_data_at": "2026-10-25 09:35:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        }
+      },
+      {
+        "id": 103,
+        "nickname": "Ficus",
+        "scientific_name": "Ficus elastica",
+        "status": 2,
+        "plant_id": 1003,
+        "family_id": null,
+        "wifi_status": 1,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": null,
+        "plant_origin_path": null,
+        "received_data_at": "2026-10-25 04:10:00",
+        "temperature_optimal_hours": 20,
+        "light_optimal_hours": 6,
+        "temperature_status": 4,
+        "light_status": 1,
+        "moisture_status": 3,
+        "salinity_status": 3,
+        "garden": {
+          "id": 7
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:03",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": true,
+          "received_data_at": "2026-10-25 04:10:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        }
+      },
+      {
+        "id": 104,
+        "nickname": "Cactus",
+        "scientific_name": "Echinopsis",
+        "status": 3,
+        "plant_id": 1004,
+        "family_id": null,
+        "wifi_status": 1,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": null,
+        "plant_origin_path": null,
+        "received_data_at": null,
+        "temperature_optimal_hours": 0,
+        "light_optimal_hours": 0,
+        "garden": {
+          "id": 7
+        },
+        "sensor": {
+          "id": null,
+          "has_sensor": false,
+          "status": 0,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": null,
+          "is_battery_low": false,
+          "received_data_at": null
+        },
+        "hub": {
+          "id": null,
+          "hub_id": null,
+          "status": null,
+          "received_data_at": null,
+          "reached_hub_at": null
+        }
+      }
+    ]
+  },
+  "details": {
+    "101": {
+      "plant": {
+        "id": 101,
+        "nickname": "Monstera",
+        "scientific_name": "Monstera deliciosa",
+        "genus": null,
+        "status": 2,
+        "plant_id": 1001,
+        "family_id": null,
+        "thumb_path": "https://web.fyta.de/storage/user-plants/101/thumb.jpg",
+        "origin_path": "https://web.fyta.de/storage/user-plants/101/origin.jpg",
+        "plant_thumb_path": "https://plants.example.org/species/monstera-thumb.jpg",
+        "plant_origin_path": "https://plants.example.org/species/monstera-thumb.jpg",
+        "received_data_at": "2026-10-25 09:40:00",
+        "gathering_data": false,
+        "is_illegal": false,
+        "is_productive_plant": false,
+        "not_supported": false,
+        "sensor_update_available": false,
+        "fertilisation": {
+          "last_fertilised_at": "2026-09-20",
+          "fertilise_at": "2026-11-01",
+          "was_repotted": false
+        },
+        "notifications": {
+          "light": true,
+          "temperature": true,
+          "water": true,
+          "nutrition": true
+        },
+        "dismissed_sensor_message_at": null,
+        "garden": {
+          "id": 7,
+          "name": "Salon"
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:01",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": false,
+          "received_data_at": "2026-10-25 09:40:00",
+          "created_at": "2026-03-02 18:12:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        },
+        "measurements": {
+          "ph": {
+            "status": null,
+            "values": {
+              "min": "4",
+              "max": "7",
+              "current": null
+            },
+            "unit": "pH",
+            "absolute_values": {
+              "min": "0",
+              "max": "7.5",
+              "minText": "0",
+              "maxText": "7.5"
+            }
+          },
+          "moisture": {
+            "status": 1,
+            "values": {
+              "min_good": "35",
+              "max_good": "70",
+              "min_acceptable": "25",
+              "max_acceptable": "80",
+              "current": "18",
+              "currentFormatted": "18"
+            },
+            "unit": "%/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "85",
+              "minText": "0",
+              "maxText": "85"
+            }
+          },
+          "light": {
+            "status": 3,
+            "values": {
+              "min_good": "20",
+              "max_good": "450",
+              "min_acceptable": "18",
+              "max_acceptable": "675",
+              "current": "120",
+              "currentFormatted": "120"
+            },
+            "unit": "μmol/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "700",
+              "minText": "0",
+              "maxText": "700"
+            }
+          },
+          "temperature": {
+            "status": 3,
+            "values": {
+              "min_good": "17",
+              "max_good": "36",
+              "min_acceptable": "10",
+              "max_acceptable": "42",
+              "current": "21.5",
+              "currentFormatted": "21.5"
+            },
+            "unit": "°C/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "50",
+              "minText": "0",
+              "maxText": "50"
+            }
+          },
+          "salinity": {
+            "status": 2,
+            "values": {
+              "min_good": "0.6",
+              "max_good": "1",
+              "min_acceptable": "0.4",
+              "max_acceptable": "1.2",
+              "current": "0.45",
+              "currentFormatted": "0.45"
+            },
+            "unit": "mS/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "1.4",
+              "minText": "0",
+              "maxText": "1.4"
+            }
+          },
+          "nutrients": {
+            "type": "nutrients",
+            "status": 2
+          },
+          "battery": "64"
+        },
+        "temperature_unit": 1,
+        "know_hows": []
+      }
+    },
+    "102": {
+      "plant": {
+        "id": 102,
+        "nickname": "Basilic",
+        "scientific_name": "Ocimum basilicum",
+        "genus": null,
+        "status": 1,
+        "plant_id": 1002,
+        "family_id": null,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": "https://plants.example.org/species/basil-thumb.jpg",
+        "plant_origin_path": "https://plants.example.org/species/basil-thumb.jpg",
+        "received_data_at": "2026-10-25 09:35:00",
+        "gathering_data": false,
+        "is_illegal": false,
+        "is_productive_plant": true,
+        "not_supported": false,
+        "sensor_update_available": false,
+        "fertilisation": {
+          "last_fertilised_at": "2026-10-11",
+          "fertilise_at": "2026-11-08",
+          "was_repotted": true
+        },
+        "notifications": {
+          "light": true,
+          "temperature": true,
+          "water": true,
+          "nutrition": true
+        },
+        "dismissed_sensor_message_at": null,
+        "garden": {
+          "id": 7,
+          "name": "Salon"
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:02",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": false,
+          "received_data_at": "2026-10-25 09:35:00",
+          "created_at": "2026-03-02 18:12:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        },
+        "measurements": {
+          "ph": {
+            "status": null,
+            "values": {
+              "min": "4",
+              "max": "7",
+              "current": null
+            },
+            "unit": "pH",
+            "absolute_values": {
+              "min": "0",
+              "max": "7.5",
+              "minText": "0",
+              "maxText": "7.5"
+            }
+          },
+          "moisture": {
+            "status": 3,
+            "values": {
+              "min_good": "35",
+              "max_good": "70",
+              "min_acceptable": "25",
+              "max_acceptable": "80",
+              "current": "52",
+              "currentFormatted": "52"
+            },
+            "unit": "%/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "85",
+              "minText": "0",
+              "maxText": "85"
+            }
+          },
+          "light": {
+            "status": 3,
+            "values": {
+              "min_good": "20",
+              "max_good": "450",
+              "min_acceptable": "18",
+              "max_acceptable": "675",
+              "current": "310",
+              "currentFormatted": "310"
+            },
+            "unit": "μmol/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "700",
+              "minText": "0",
+              "maxText": "700"
+            }
+          },
+          "temperature": {
+            "status": 3,
+            "values": {
+              "min_good": "17",
+              "max_good": "36",
+              "min_acceptable": "10",
+              "max_acceptable": "42",
+              "current": "22.8",
+              "currentFormatted": "22.8"
+            },
+            "unit": "°C/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "50",
+              "minText": "0",
+              "maxText": "50"
+            }
+          },
+          "salinity": {
+            "status": 3,
+            "values": {
+              "min_good": "0.6",
+              "max_good": "1",
+              "min_acceptable": "0.4",
+              "max_acceptable": "1.2",
+              "current": "0.8",
+              "currentFormatted": "0.8"
+            },
+            "unit": "mS/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "1.4",
+              "minText": "0",
+              "maxText": "1.4"
+            }
+          },
+          "nutrients": {
+            "type": "nutrients",
+            "status": 3
+          },
+          "battery": "88"
+        },
+        "temperature_unit": 1,
+        "know_hows": []
+      }
+    },
+    "103": {
+      "plant": {
+        "id": 103,
+        "nickname": "Ficus",
+        "scientific_name": "Ficus elastica",
+        "genus": null,
+        "status": 2,
+        "plant_id": 1003,
+        "family_id": null,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": null,
+        "plant_origin_path": null,
+        "received_data_at": "2026-10-25 04:10:00",
+        "gathering_data": false,
+        "is_illegal": false,
+        "is_productive_plant": false,
+        "not_supported": false,
+        "sensor_update_available": false,
+        "fertilisation": {
+          "last_fertilised_at": null,
+          "fertilise_at": null,
+          "was_repotted": false
+        },
+        "notifications": {
+          "light": true,
+          "temperature": true,
+          "water": true,
+          "nutrition": true
+        },
+        "dismissed_sensor_message_at": null,
+        "garden": {
+          "id": 7,
+          "name": "Salon"
+        },
+        "sensor": {
+          "id": "C8:2B:96:00:01:03",
+          "has_sensor": true,
+          "status": 1,
+          "uuid_android": null,
+          "uuid_ios": null,
+          "version": "1.2.4",
+          "is_battery_low": true,
+          "received_data_at": "2026-10-25 04:10:00",
+          "created_at": "2026-03-02 18:12:00"
+        },
+        "hub": {
+          "id": 31,
+          "hub_id": "C8:2B:96:00:00:31",
+          "status": 1,
+          "received_data_at": "2026-10-25 09:55:00",
+          "reached_hub_at": "2026-10-25 09:55:00"
+        },
+        "measurements": {
+          "ph": {
+            "status": null,
+            "values": {
+              "min": "4",
+              "max": "7",
+              "current": null
+            },
+            "unit": "pH",
+            "absolute_values": {
+              "min": "0",
+              "max": "7.5",
+              "minText": "0",
+              "maxText": "7.5"
+            }
+          },
+          "moisture": {
+            "status": 3,
+            "values": {
+              "min_good": "35",
+              "max_good": "70",
+              "min_acceptable": "25",
+              "max_acceptable": "80",
+              "current": "40",
+              "currentFormatted": "40"
+            },
+            "unit": "%/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "85",
+              "minText": "0",
+              "maxText": "85"
+            }
+          },
+          "light": {
+            "status": 1,
+            "values": {
+              "min_good": "20",
+              "max_good": "450",
+              "min_acceptable": "18",
+              "max_acceptable": "675",
+              "current": "9",
+              "currentFormatted": "9"
+            },
+            "unit": "μmol/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "700",
+              "minText": "0",
+              "maxText": "700"
+            }
+          },
+          "temperature": {
+            "status": 4,
+            "values": {
+              "min_good": "17",
+              "max_good": "36",
+              "min_acceptable": "10",
+              "max_acceptable": "42",
+              "current": "29",
+              "currentFormatted": "29"
+            },
+            "unit": "°C/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "50",
+              "minText": "0",
+              "maxText": "50"
+            }
+          },
+          "salinity": {
+            "status": 3,
+            "values": {
+              "min_good": "0.6",
+              "max_good": "1",
+              "min_acceptable": "0.4",
+              "max_acceptable": "1.2",
+              "current": "0.7",
+              "currentFormatted": "0.7"
+            },
+            "unit": "mS/h",
+            "absolute_values": {
+              "min": "0",
+              "max": "1.4",
+              "minText": "0",
+              "maxText": "1.4"
+            }
+          },
+          "nutrients": {
+            "type": "nutrients",
+            "status": 3
+          },
+          "battery": "12"
+        },
+        "temperature_unit": 1,
+        "know_hows": []
+      }
+    },
+    "104": {
+      "plant": {
+        "id": 104,
+        "nickname": "Cactus",
+        "scientific_name": "Echinopsis",
+        "genus": null,
+        "status": 3,
+        "plant_id": 1004,
+        "family_id": null,
+        "thumb_path": null,
+        "origin_path": null,
+        "plant_thumb_path": null,
+        "plant_origin_path": null,
+        "received_data_at": null,
+        "gathering_data": false,
+        "is_illegal": false,
+        "not_supported": false,
+        "sensor_update_available": false,
+        "garden": {
+          "id": 7,
+          "name": "Salon"
+        },
+        "sensor": null,
+        "hub": null,
+        "temperature_unit": 1,
+        "know_hows": []
+      }
+    }
+  }
+}

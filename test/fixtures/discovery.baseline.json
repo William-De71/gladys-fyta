@@ -1,0 +1,770 @@
+{
+  "devices": {
+    "with_ph": {
+      "external_id": "ext:test-integration:plant:101",
+      "should_poll": false,
+      "params": ["FYTA_PLANT_ID", "FYTA_SCIENTIFIC_NAME", "FYTA_GARDEN", "FYTA_SENSOR_ID"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:plant:101:moisture",
+          "category": "soil-moisture-sensor",
+          "type": "decimal",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:light",
+          "category": "light-sensor",
+          "type": "decimal",
+          "unit": null,
+          "min": 0,
+          "max": 3000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -30,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:ph",
+          "category": "ph-sensor",
+          "type": "decimal",
+          "unit": "ph",
+          "min": 0,
+          "max": 14,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:battery",
+          "category": "battery",
+          "type": "integer",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:battery_low",
+          "category": "battery-low",
+          "type": "binary",
+          "unit": null,
+          "min": 0,
+          "max": 1,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:plant_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:moisture_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:light_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:temperature_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:salinity_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:nutrients_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "without_ph": {
+      "external_id": "ext:test-integration:plant:101",
+      "should_poll": false,
+      "params": ["FYTA_PLANT_ID", "FYTA_SCIENTIFIC_NAME", "FYTA_GARDEN", "FYTA_SENSOR_ID"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:plant:101:moisture",
+          "category": "soil-moisture-sensor",
+          "type": "decimal",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:light",
+          "category": "light-sensor",
+          "type": "decimal",
+          "unit": null,
+          "min": 0,
+          "max": 3000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -30,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:battery",
+          "category": "battery",
+          "type": "integer",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:battery_low",
+          "category": "battery-low",
+          "type": "binary",
+          "unit": null,
+          "min": 0,
+          "max": 1,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:plant_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:moisture_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:light_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:temperature_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:salinity_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:plant:101:nutrients_status",
+          "category": "text",
+          "type": "text",
+          "unit": null,
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "email",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "type": "secret"
+      },
+      {
+        "key": "readings",
+        "type": "section"
+      },
+      {
+        "key": "poll_interval",
+        "type": "select"
+      },
+      {
+        "key": "offline_after",
+        "type": "select"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "actions": ["test_connection", "diagnostic"],
+    "action_fields": {
+      "test_connection": [],
+      "diagnostic": []
+    },
+    "widgets": [
+      {
+        "key": "plants_to_care",
+        "settings": [],
+        "options": {}
+      },
+      {
+        "key": "plant",
+        "settings": ["plant"],
+        "options": {}
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "plant_needs_attention",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "problems",
+            "type": "string"
+          },
+          {
+            "key": "problem_count",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "plant_thirsty",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "moisture",
+            "type": "number"
+          },
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_label",
+            "type": "string"
+          },
+          {
+            "key": "min_good",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "measure_out_of_range",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          },
+          {
+            "key": "measure",
+            "options": ["moisture", "light", "temperature", "salinity", "nutrients"]
+          },
+          {
+            "key": "level",
+            "options": ["too_low", "low", "high", "too_high"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "measure",
+            "type": "string"
+          },
+          {
+            "key": "measure_label",
+            "type": "string"
+          },
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_label",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "type": "number"
+          },
+          {
+            "key": "unit",
+            "type": "string"
+          },
+          {
+            "key": "min_good",
+            "type": "number"
+          },
+          {
+            "key": "max_good",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "measure_back_in_range",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          },
+          {
+            "key": "measure",
+            "options": ["moisture", "light", "temperature", "salinity", "nutrients"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "measure",
+            "type": "string"
+          },
+          {
+            "key": "measure_label",
+            "type": "string"
+          },
+          {
+            "key": "previous_level",
+            "type": "string"
+          },
+          {
+            "key": "previous_level_label",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "type": "number"
+          },
+          {
+            "key": "unit",
+            "type": "string"
+          },
+          {
+            "key": "min_good",
+            "type": "number"
+          },
+          {
+            "key": "max_good",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "sensor_battery_low",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "battery_level",
+            "type": "number"
+          },
+          {
+            "key": "sensor_id",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "sensor_silent",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "hours_without_data",
+            "type": "number"
+          },
+          {
+            "key": "last_measurement_at",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "sensor_back",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "hours_without_data",
+            "type": "number"
+          },
+          {
+            "key": "last_measurement_at",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "fertilisation_due",
+        "fields": [
+          {
+            "key": "plant",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "plant",
+            "type": "string"
+          },
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "plant_id",
+            "type": "number"
+          },
+          {
+            "key": "scientific_name",
+            "type": "string"
+          },
+          {
+            "key": "due_date",
+            "type": "string"
+          },
+          {
+            "key": "last_fertilised",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "access_refused",
+        "fields": [
+          {
+            "key": "reason",
+            "options": ["unknown_account", "wrong_password", "token"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "reason",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "refresh",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "plant_count",
+            "type": "number"
+          },
+          {
+            "key": "care_count",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "get_plant",
+        "fields": ["plant"],
+        "outputs": [
+          {
+            "key": "plant_name",
+            "type": "string"
+          },
+          {
+            "key": "state",
+            "type": "string"
+          },
+          {
+            "key": "needs_attention",
+            "type": "boolean"
+          },
+          {
+            "key": "moisture",
+            "type": "number"
+          },
+          {
+            "key": "moisture_state",
+            "type": "string"
+          },
+          {
+            "key": "light",
+            "type": "number"
+          },
+          {
+            "key": "light_state",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "temperature_state",
+            "type": "string"
+          },
+          {
+            "key": "salinity",
+            "type": "number"
+          },
+          {
+            "key": "salinity_state",
+            "type": "string"
+          },
+          {
+            "key": "nutrients_state",
+            "type": "string"
+          },
+          {
+            "key": "battery",
+            "type": "number"
+          },
+          {
+            "key": "hours_without_data",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_care_summary",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "care_count",
+            "type": "number"
+          },
+          {
+            "key": "plant_count",
+            "type": "number"
+          },
+          {
+            "key": "silent_count",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

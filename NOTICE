@@ -1,0 +1,16 @@
+Gladys FYTA integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It reads the plants of the user's own FYTA account (FYTA Beam plant sensors)
+through the official FYTA Public API
+(https://fyta-io.notion.site/FYTA-Public-API-d2f4c30306f74504924c9a40402a3afd),
+with the e-mail address and the password of that account. This integration is
+not affiliated with nor endorsed by FYTA GmbH. The endpoints and fields follow
+the official documentation (its examples are kept unchanged in
+test/fixtures/fyta-doc.json) and the refusals of the live API; the fields the
+documentation leaves out (nutrients, fertilisation) and the meaning of the
+statuses were compared with the Home Assistant "FYTA" integration and its
+"fyta_cli" library (https://github.com/dontinelli/fyta_cli, GPL-3.0). No code
+and no test data are taken from either.

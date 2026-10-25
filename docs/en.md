@@ -1,0 +1,97 @@
+# FYTA
+
+## Overview
+
+This integration brings the plants of your FYTA account into Gladys: the measurements of your **FYTA Beam** plant sensors (soil moisture, light, temperature, battery) and what FYTA thinks of them (too low, perfect, too high), through the official [FYTA Public API](https://fyta-io.notion.site/FYTA-Public-API-d2f4c30306f74504924c9a40402a3afd) with the e-mail address and the password of your FYTA account. It only reads. It is not affiliated with FYTA.
+
+- One device per plant that has a sensor: soil moisture, light, temperature, sensor battery and its low flag, the pH when FYTA gives one, and the states FYTA gives (plant, soil moisture, light, temperature, salinity, nutrients).
+- Two dashboard widgets: the plants to care for, the worst first; one plant with its picture.
+- Scene triggers: plant needs attention, plant thirsty, measure out of range, measure back in range, sensor battery low, sensor silent, sensor back, fertilizing due, access refused.
+- Scene actions: refresh now, the values of a plant, the summary of the plants to care for.
+
+Transport: cloud. The e-mail address and the password go to FYTA (`web.fyta.de`) to log in; the measurements of your plants come from the FYTA cloud, which receives them from your Beams through the FYTA Hub or the FYTA app.
+
+## Prerequisites
+
+- Gladys Assistant 5.1.0 or later.
+- A FYTA account (the one of the FYTA app) with at least one plant linked to a **FYTA Beam** sensor. Plants without a sensor are not offered.
+- The measurements must reach the FYTA cloud: through a **FYTA Hub**, or through the FYTA app when your phone is near the Beam. Without a hub, the values only change when the app syncs.
+- The API logs in with an e-mail address and a password only: use the ones you sign in with in the FYTA app.
+
+How fresh the data are: a Beam sends its measurements about once an hour. Reading FYTA more often brings nothing new; FYTA marks a sensor in error after 1.5 hours without a measurement.
+
+## Configuration
+
+| Field                     | Meaning                                                                                              |
+| ------------------------- | ---------------------------------------------------------------------------------------------------- |
+| E-mail address            | The e-mail of your FYTA account                                                                      |
+| Password                  | Its password (a secret: never shown again, never written to the logs nor to `/data`)                 |
+| Reading of the plants     | Every 10, 15 (default), 30 or 60 minutes; the details of a plant are read only when FYTA shows news  |
+| Sensor without data after | 2, 3 (default), 6, 12 or 24 hours without a new measurement                                          |
+| Language of the texts     | Feature names, states (too low, perfect…), scene texts and errors; automatic follows the last widget |
+
+Buttons:
+
+- **Test the connection** logs in to FYTA and lists the plants with a sensor (and how many have none).
+- **Diagnostic** writes the state of the integration to its logs, without the password nor the token.
+
+The integration keeps the access token FYTA gives at the login in `/data` (readable by the integration only) until it expires (60 days according to the FYTA documentation), so that a restart does not log in again.
+
+## Usage
+
+### Devices
+
+After the configuration, open **Discover**: each plant with a sensor is offered as a device named after its nickname in the FYTA app. Add the ones you want.
+
+| Feature                                                               | Category / type                    | Unit      |
+| --------------------------------------------------------------------- | ---------------------------------- | --------- |
+| Soil moisture                                                         | `soil-moisture-sensor` / `decimal` | %         |
+| Light (photon flux, as FYTA measures it)                              | `light-sensor` / `decimal`         | µmol/m²/s |
+| Temperature                                                           | `temperature-sensor` / `decimal`   | °C        |
+| Soil pH (only when FYTA gives one)                                    | `ph-sensor` / `decimal`            | pH        |
+| Sensor battery                                                        | `battery` / `integer`              | %         |
+| Sensor battery low                                                    | `battery-low` / `binary`           | —         |
+| States: plant, soil moisture, light, temperature, salinity, nutrients | `text` / `text`                    | —         |
+
+The light is a photon flux (PPFD, µmol/m²/s), not lux: Gladys has no unit for it, so the value shows without one and its name says it. The salinity (fertilizer, mS/cm) has no matching category in Gladys: its state is a feature, its value is in the widget and the scenes.
+
+### Dashboard widgets
+
+![The two widgets: the plants to care for (a thirsty Monstera, a Ficus without data) and one plant with its picture, measures and states (generated illustration, not a screenshot)](https://raw.githubusercontent.com/William-De71/gladys-fyta/main/docs/assets/widgets.en.png)
+
+- **Plants to care for**: how many plants need care, are doing great, send no data; then the plants to look after, the worst first (thirsty, far out of range, out of range, silent sensor, low battery). Tap a plant for the values and their ideal range. The **Refresh** button reads FYTA now (once a minute at most).
+- **FYTA plant**: one plant (choose it in the settings of the widget; the first one by default): its picture from the FYTA app, soil moisture, light, temperature, salinity and battery colored by their state, the state of the plant and of its nutrients, the last measurement and the next fertilizing date.
+
+### Scenes
+
+Triggers (once per change, never at the first reading, never because of a scene action), filtered by plant:
+
+- **Plant needs attention**: FYTA's state of the plant goes from "doing great" to "needs attention".
+- **Plant thirsty**: the soil moisture enters the low or too low range of the plant.
+- **Measure out of range**: soil moisture, light, temperature, salinity or nutrients changes to low, too low, high or too high (filters: measures, levels).
+- **Measure back in range**: a measure comes back to perfect.
+- **Sensor battery low**: FYTA flags the battery of the sensor.
+- **Sensor silent** / **Sensor back**: no measurement for the delay of the configuration, then measurements again.
+- **Fertilizing due**: the date FYTA planned is reached, at 9:00.
+- **Access refused**: FYTA refuses the e-mail address, the password or the account.
+
+Actions:
+
+- **Refresh now**: reads every plant (once a minute at most); returns the number of plants and of plants to care for.
+- **Values of a plant**: soil moisture, light, temperature, salinity, battery, their states and a sentence, from the last reading.
+- **Plants to care for**: how many, which and why, in a sentence — for a daily message.
+
+Examples:
+
+- When **FYTA: plant thirsty** → send "{{triggerEvent.data.plant_name}} is thirsty ({{triggerEvent.data.moisture}} %)".
+- Every day at 8:00 → **FYTA: plants to care for**; if the number is above 0 → send its summary.
+- When **FYTA: sensor silent** → send "No news from {{triggerEvent.data.plant_name}} for {{triggerEvent.data.hours_without_data}} h: is the hub on?".
+
+## Troubleshooting
+
+- **"FYTA does not know this e-mail address"** or **"refused the password"**: check them by signing in to the FYTA app with the same e-mail address and password.
+- **No device offered**: only plants linked to a Beam are offered; press **Test the connection** to see what FYTA gives.
+- **Values that do not change**: the Beam needs a FYTA Hub, or the FYTA app open near it, to send its measurements; the "Last measurement" row of the plant widget tells when FYTA last received one.
+- **Light without a unit**: on purpose, see Devices.
+- **A temperature in °F** in the FYTA app: the integration converts it to °C when FYTA says so (not tested with a real account).
+- For an issue, give the versions of Gladys and of the integration, the message of **Test the connection** and the "FYTA diagnostic" lines written by **Diagnostic** in the logs of the integration. Never paste your password.

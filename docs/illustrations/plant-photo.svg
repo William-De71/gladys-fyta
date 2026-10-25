@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <!-- A drawing standing for the photo of a plant in the FYTA app (illustration). -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4efe6"/>
+      <stop offset="1" stop-color="#e2d8c7"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4caf62"/>
+      <stop offset="1" stop-color="#1f6b37"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e9e4dc"/>
+      <stop offset="1" stop-color="#c9c1b4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect x="560" y="0" width="240" height="450" fill="#fbf8f2" opacity="0.6"/>
+  <rect x="0" y="380" width="800" height="70" fill="#b89a74"/>
+  <g transform="translate(400 270)">
+    <g stroke="#2f7d45" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M0 110 C-10 40 -60 -20 -120 -60"/>
+      <path d="M0 110 C10 30 60 -40 130 -90"/>
+      <path d="M0 110 C0 20 -10 -60 0 -140"/>
+      <path d="M0 110 C-30 70 -120 40 -190 30"/>
+      <path d="M0 110 C40 70 130 50 200 20"/>
+    </g>
+    <g fill="url(#leaf)">
+      <path d="M-120 -60 C-200 -80 -230 -10 -170 20 C-150 -10 -140 -30 -120 -60 Z"/>
+      <path d="M-120 -60 C-110 -140 -40 -130 -40 -70 C-70 -60 -95 -60 -120 -60 Z"/>
+      <path d="M130 -90 C200 -130 250 -60 190 -20 C170 -50 150 -70 130 -90 Z"/>
+      <path d="M130 -90 C110 -170 40 -150 50 -90 C80 -85 105 -85 130 -90 Z"/>
+      <path d="M0 -140 C-60 -190 -40 -240 0 -250 C40 -240 60 -190 0 -140 Z"/>
+      <path d="M-190 30 C-260 10 -270 70 -220 90 C-210 60 -200 45 -190 30 Z"/>
+      <path d="M200 20 C270 -10 290 50 240 80 C225 55 212 38 200 20 Z"/>
+    </g>
+    <g stroke="#f4efe6" stroke-width="5" stroke-linecap="round">
+      <line x1="-150" y1="-50" x2="-170" y2="-30"/>
+      <line x1="-90" y1="-90" x2="-80" y2="-110"/>
+      <line x1="160" y1="-80" x2="185" y2="-70"/>
+      <line x1="95" y1="-110" x2="85" y2="-130"/>
+      <line x1="0" y1="-190" x2="-20" y2="-205"/>
+    </g>
+  </g>
+  <g transform="translate(320 360)">
+    <path d="M0 0 H160 L145 100 H15 Z" fill="url(#pot)"/>
+    <rect x="-8" y="-10" width="176" height="18" rx="6" fill="#d8d1c6"/>
+  </g>
+  <g transform="translate(455 320)">
+    <rect x="-5" y="8" width="10" height="50" rx="5" fill="#ffffff"/>
+    <circle r="17" fill="#ffffff"/>
+    <circle r="11" fill="none" stroke="#3ec27a" stroke-width="4"/>
+  </g>
+</svg>
