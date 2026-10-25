@@ -13,7 +13,7 @@ Transport: cloud. The e-mail address and the password go to FYTA (`web.fyta.de`)
 
 ## Prerequisites
 
-- Gladys Assistant 5.1.0 or later.
+- Gladys Assistant 5.3.0 or later.
 - A FYTA account (the one of the FYTA app) with at least one plant linked to a **FYTA Beam** sensor. Plants without a sensor are not offered.
 - The measurements must reach the FYTA cloud: through a **FYTA Hub**, or through the FYTA app when your phone is near the Beam. Without a hub, the values only change when the app syncs.
 - The API logs in with an e-mail address and a password only: use the ones you sign in with in the FYTA app.

@@ -13,7 +13,7 @@ Transport: Cloud. E-Mail-Adresse und Passwort gehen zur Anmeldung an FYTA (`web.
 
 ## Voraussetzungen
 
-- Gladys Assistant 5.1.0 oder neuer.
+- Gladys Assistant 5.3.0 oder neuer.
 - Ein FYTA-Konto (das der FYTA-App) mit mindestens einer Pflanze, die mit einem **FYTA-Beam**-Sensor verbunden ist. Pflanzen ohne Sensor werden nicht angeboten.
 - Die Messwerte müssen in die FYTA-Cloud gelangen: über einen **FYTA Hub** oder über die FYTA-App, wenn dein Telefon in der Nähe des Beams ist. Ohne Hub ändern sich die Werte nur, wenn die App synchronisiert.
 - Die API meldet sich nur mit E-Mail-Adresse und Passwort an: nimm die, mit denen du dich in der FYTA-App anmeldest.

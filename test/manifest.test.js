@@ -60,8 +60,8 @@ test('declares the cloud transport: web.fyta.de only; a POST for the login only'
   assert.doesNotMatch(source('../src/app.js'), /publishTransports|GLADYS_PREFER_LOCAL/);
 });
 
-test('widgets and scenes need Gladys 5.1.0, nothing more; no permission', () => {
-  assert.equal(manifest.gladys_version, '>=5.1.0');
+test('Gladys 5.3.0 for the catalog keywords, nothing more; no permission', () => {
+  assert.equal(manifest.gladys_version, '>=5.3.0');
   assert.deepEqual(manifest.categories, ['environment']);
   const text = JSON.stringify(manifest);
   assert.doesNotMatch(text, /"source":"houses"/, 'houses need 5.2.0');
@@ -72,8 +72,6 @@ test('widgets and scenes need Gladys 5.1.0, nothing more; no permission', () => 
     'network_discovery',
     'webhooks',
     'messaging',
-    'keywords',
-    'countries',
     'energy_contracts',
   ]) {
     assert.equal(manifest[key], undefined, `${key} (permission, or a newer Gladys)`);
@@ -224,4 +222,14 @@ test('the configuration read from Gladys: trimmed e-mail, password as typed, def
   assert.equal(normalizeConfig({ password: '   ' }).password, '');
   assert.equal(normalizeConfig({ poll_interval: '5' }).pollMinutes, DEFAULT_POLL_MINUTES);
   assert.equal(normalizeConfig(null).language, AUTO_LANGUAGE);
+});
+
+test('catalog keywords and countries of Gladys 5.3.0', () => {
+  assert.equal(manifest.gladys_version, '>=5.3.0');
+  const keywords = manifest.keywords.map((keyword) => keyword.trim().toLowerCase());
+  assert.ok(keywords.length >= 1 && keywords.length <= 10, 'one to ten keywords');
+  keywords.forEach((keyword) => assert.ok(keyword.length >= 2 && keyword.length <= 30, keyword));
+  assert.equal(new Set(keywords).size, keywords.length, 'unique once trimmed and lowercased');
+  // Usable everywhere: no `countries`, the catalog shows it in every country.
+  assert.equal(manifest.countries, undefined);
 });

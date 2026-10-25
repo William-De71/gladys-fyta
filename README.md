@@ -5,7 +5,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/William-De71/gladys-fyta?sort=semver)](https://github.com/William-De71/gladys-fyta/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-fyta/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-fyta/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.1.0-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![FYTA for Gladys Assistant](cover.jpg)
 
@@ -111,7 +111,7 @@ Examples:
 
 ## Requirements
 
-- Gladys Assistant **5.1.0** or later (widgets and scenes of integrations): older instances cannot install the integration.
+- Gladys Assistant **5.3.0** or later (widgets and scenes of integrations, catalog keywords of Gladys 5.3): older instances cannot install the integration.
 - A FYTA account with at least one plant linked to a **FYTA Beam**, whose measurements reach the FYTA cloud through a **FYTA Hub** (or the FYTA app when the phone is near).
 - The internet: the integration talks to `web.fyta.de` only (and to the host of the plant pictures FYTA gives, without the token unless it is on `fyta.de`).
 

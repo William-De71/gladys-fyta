@@ -10,8 +10,20 @@
   },
   "version": "0.1.0",
   "docker_image": "ghcr.io/william-de71/gladys-fyta:0.1.0",
-  "gladys_version": ">=5.1.0",
+  "gladys_version": ">=5.3.0",
   "categories": ["environment"],
+  "keywords": [
+    "fyta beam",
+    "plant sensor",
+    "capteur plante",
+    "plante",
+    "humidité du sol",
+    "soil moisture",
+    "arrosage",
+    "watering",
+    "jardin",
+    "garden"
+  ],
   "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-fyta/main/cover.jpg",
   "transports": ["cloud"],
   "config_schema": [
